@@ -9,13 +9,13 @@ function Base64Tool() {
     const [isOutputVisible, setIsOutputVisible] = useState(false);
 
     const handleInputChange = (event) => {
-        setInputData(event.target.value.trim()); // Remove leading and trailing spaces
+        setInputData(event.target.value);
         setIsDecoding(isBase64Encoded(event.target.value.trim()));
     };
 
     const autoPasteFromClipboard = async () => {
         const clipboardData = await navigator.clipboard.readText();
-        setInputData(clipboardData.trim()); // Remove leading and trailing spaces
+        setInputData(clipboardData.trim());
         setIsDecoding(isBase64Encoded(clipboardData.trim()));
     }
 
@@ -49,7 +49,7 @@ function Base64Tool() {
     };
 
     return (
-        <div className="w-full max-w-screen-md mx-auto mt-10 p-5 rounded-lg bg-gray-100 shadow-lg">
+        <div className="w-full max-w-screen-md mx-auto mt-10 p-5 rounded-lg  shadow-none">
             <AnimatePresence>
                 {!isOutputVisible && (
                     <textarea
@@ -57,33 +57,40 @@ function Base64Tool() {
                         value={inputData}
                         onChange={handleInputChange}
                         rows={10}
-                        className="w-full border rounded-none p-2 mb-3 border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                        className="w-full text-white border-black border-[2px] rounded-none p-2 mb-3 bg-transparent focus:border-black outline-none"
+                        style={{ backdropFilter: 'blur(100px)' }} />
+
                 )}
             </AnimatePresence>
             <div className='flex gap-3'>
                 <motion.button
-                    className="w-full bg-blue-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-nonefocus:outline-none"
-                    whileHover={{ scale: 1.1 }}
+                    className="w-full text-white border-black border-[2px] font-bold py-2 px-4 rounded-none focus:outline-none bg-blur"
+                    // whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={handleButtonClick}
-                >
+                    style={{ backdropFilter: 'blur(90px)' }}>
                     {isDecoding ? 'Decode' : 'Encode'}
                 </motion.button>
                 <motion.button
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-nonefocus:outline-none"
-                    whileHover={{ scale: 1.1 }}
+                    className="w-full text-white border-black border-[2px] font-bold py-2 px-4 rounded-none focus:outline-none "
+                    // whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
+
                     whileTap={{ scale: 0.9 }}
                     onClick={autoPasteFromClipboard}
-                >
+                    style={{ backdropFilter: 'blur(20px)' }}>
+
                     Auto Paste
                 </motion.button>
                 <motion.button
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-nonefocus:outline-none"
-                    whileHover={{ scale: 1.1 }}
+                    className="w-full text-white border-black border-[2px] font-bold py-2 px-4 rounded-none focus:outline-none "
+
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.navigator.clipboard.writeText(outputData)}
-                >
+                    style={{ backdropFilter: 'blur(20px)' }}>
+
                     Copy Output
                 </motion.button>
             </div>
@@ -107,17 +114,18 @@ function Base64Tool() {
                         value={outputData}
                         readOnly
                         rows={10}
-                        className="w-full border rounded-none p-2 mt-3 border-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-4 w-full text-white border-black border-[2px] rounded-none p-2 mb-3 bg-transparent focus:border-black outline-none"
+                        style={{ backdropFilter: 'blur(100px)' }}
+
                     />
                 )}
             </AnimatePresence>
 
             <div className="flex justify-end mt-3">
                 {isOutputVisible && (<button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-nonefocus:outline-none"
+                    className="text-white border-black border-[2px] font-bold py-2 px-4 rounded-none focus:outline-none bg-blur"
                     onClick={toggleVisibility}
                 >
-                    {/* {isOutputVisible  "Show Input"} */}
                     Show Input
                 </button>)}
             </div>
